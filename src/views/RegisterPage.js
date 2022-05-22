@@ -1,7 +1,8 @@
 import React from 'react';
 import { useEffect,useState } from 'react';
-import { Routes, Route, Navigate } from 'react-router-dom';
+import { Routes, Route, Navigate, Link } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import {authApi} from '../redux';
 
 const RegisterPage=()=>{
     
@@ -9,6 +10,7 @@ const RegisterPage=()=>{
     const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const isLoggedIn = useSelector(state=>state.auth.isLoggedIn);
 
     const handleChange = ({ target: { name, value } }) => {
         switch (name) {
@@ -24,7 +26,8 @@ const RegisterPage=()=>{
       };
     
       const handleSubmit = e => {
-        // dispatch(authOperations.register({ name, email, password }));
+        e.preventDefault();
+        dispatch(authApi.register({ name, email, password }));
         setName('');
         setEmail('');
         setPassword('');
@@ -34,7 +37,7 @@ const RegisterPage=()=>{
         <div>
       <h1>Register Page</h1>
       
-        <form autoComplete="off" onSubmit={handleSubmit}>
+        {!isLoggedIn&&<form autoComplete="off" onSubmit={handleSubmit}>
           <label>Имя </label>
           <input
             type="text"
@@ -63,7 +66,11 @@ const RegisterPage=()=>{
           />
 
           <button type="submit" />
-        </form>
+        </form>}
+        {isLoggedIn&&<div>
+          <h2>Your account is created!</h2>
+          <Link to='/contacts'>Go to Phonebook</Link>
+        </div>}
         </div>
         );
 };

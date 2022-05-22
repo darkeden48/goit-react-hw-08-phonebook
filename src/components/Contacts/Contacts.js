@@ -16,11 +16,11 @@ export default function Contacts() {
   visibleContacts = contacts.filter(contact =>
     contact.name.toLowerCase().includes(filtered));
   }
-    useEffect(() => {
-      if (error) {
-        error(`Server error`);
-      }
-    }, [error]);
+    // useEffect(() => {
+    //   if (error) {
+    //     error(`Server error`);
+    //   }
+    // }, [error]);
 
   return (
     <ul className={c.contacts_list}>

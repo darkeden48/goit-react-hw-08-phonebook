@@ -2,12 +2,13 @@ import React from 'react';
 import { useEffect,useState } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
+import {authApi} from '../redux';
 
 const LoginPage=()=>{
-
 const dispatch = useDispatch();
 const [email, setEmail] = useState('');
 const [password, setPassword] = useState('');
+const isLoggedIn = useSelector(state=>state.auth.isLoggedIn);
 
 const handleChange = ({ target: { name, value } }) => {
   switch (name) {
@@ -20,8 +21,9 @@ const handleChange = ({ target: { name, value } }) => {
   }
 };
 
-const handleSubmit = () => {
-//   dispatch(authOperations.logIn({ email, password }));
+const handleSubmit = (e) => {
+  e.preventDefault();
+  dispatch(authApi.logIn({ email, password }));
   setEmail('');
   setPassword('');
 };
