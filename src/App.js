@@ -5,9 +5,11 @@ import PhoneBookPage from "views/PhoneBookPage";
 import Container from "./components/Container/Container";
 import AppBar from "components/Navigation/AppBar"
 import { useEffect } from 'react';
-import { Routes, Route, Navigate, Outlet } from 'react-router-dom';
+import { Routes, Route, Navigate, Outlet, Redirect } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 import {authApi} from './redux';
+import PrivateRoute from './components/UserMenu/PrivateRoute';
+import PublicRoute from './components/UserMenu/PublicRoute';
 
 export default function App() {
   const dispatch = useDispatch();
@@ -20,10 +22,10 @@ export default function App() {
       <Container>
       <AppBar/>
       <Routes>
-        <Route path="/" element={isLoggedIn ? <Navigate to="/contacts" /> : <HomePage/> }/>
-        <Route path="/register" element={isLoggedIn ? <Navigate to="/" /> :<RegisterPage/>} />
-        <Route path="/login" element={isLoggedIn ? <Navigate to="/contacts" /> :<LoginPage/>} />
-        <Route path="/contacts" element={isLoggedIn ? <PhoneBookPage/> : <Navigate to="/login" />}/>
+        <Route path="/" element={<PublicRoute><HomePage/></PublicRoute> }/>
+        <Route path="/register" element={<PublicRoute><RegisterPage/></PublicRoute>} />
+        <Route path="/login" element={<PublicRoute><LoginPage/></PublicRoute>} />
+        <Route path="/contacts" element={<PrivateRoute><PhoneBookPage/> </PrivateRoute>}/>
       </Routes>
       </Container>
      

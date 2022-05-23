@@ -67,10 +67,6 @@ const RegisterPage=()=>{
 
           <button type="submit" />
         </form>}
-        {isLoggedIn&&<div>
-          <h2>Your account is created!</h2>
-          <Link to='/contacts'>Go to Phonebook</Link>
-        </div>}
         </div>
         );
 };
